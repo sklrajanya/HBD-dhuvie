@@ -15,9 +15,6 @@ body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #fff1f5, #fef6e4);
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     overflow-x: hidden;
 }
 
@@ -25,6 +22,7 @@ body {
     text-align: center;
     padding: 20px;
     max-width: 900px;
+    margin: auto;
 }
 
 /* Cake */
@@ -32,6 +30,7 @@ body {
     font-size: 120px;
     cursor: pointer;
     animation: float 2s infinite ease-in-out;
+    margin-top: 30vh;
 }
 
 @keyframes float {
@@ -44,17 +43,16 @@ body {
 .heart {
     position: fixed;
     bottom: -20px;
-    font-size: 18px;
     animation: rise 6s linear infinite;
-    opacity: 0.6;
+    opacity: 0.7;
 }
 
 @keyframes rise {
-    0% {
+    from {
         transform: translateY(0) scale(1);
-        opacity: 0.7;
+        opacity: 0.8;
     }
-    100% {
+    to {
         transform: translateY(-120vh) scale(1.4);
         opacity: 0;
     }
@@ -77,20 +75,31 @@ h1 {
     margin-bottom: 20px;
 }
 
-img {
-    width: 240px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    margin-bottom: 25px;
+/* Image box */
+.image-box {
+    width: 200px;
+    height: 260px;
+    margin: 0 auto 25px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    background: #fff;
 }
 
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Message */
 .message {
-    background: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.88);
     padding: 25px;
     border-radius: 20px;
     color: #444;
     font-size: 16px;
-    line-height: 1.7;
+    line-height: 1.8;
     text-align: left;
     white-space: pre-wrap;
 }
@@ -102,11 +111,38 @@ img {
     color: #e26d5c;
 }
 
+/* Forever screen */
+#forever {
+    display: none;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(135deg,#fff1f5,#fef6e4);
+}
+
+#forever .top-text {
+    font-size: 26px;
+    color: #e26d5c;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+#forever h1 {
+    font-size: 52px;
+    color: #e26d5c;
+}
+
+#forever p {
+    font-size: 20px;
+    color: #555;
+}
+
 /* Mobile */
 @media (max-width: 600px) {
     h1 { font-size: 32px; }
-    img { width: 200px; }
     .cake { font-size: 100px; }
+    #forever h1 { font-size: 40px; }
 }
 </style>
 </head>
@@ -119,16 +155,25 @@ img {
     <div class="content" id="content">
         <h1>Happy Birthday Dhuvie 🤍</h1>
 
-        <!-- IMAGE NAME UPDATED HERE -->
-        <img src="IMG_20251012_195905_764.jpg" alt="Dhuv">
+        <div class="image-box">
+            <img src="IMG_20251012_195905_764.jpg" alt="Dhuv">
+        </div>
 
         <div class="message" id="typedText"></div>
         <div class="signature">— Yours, Raya 🤍</div>
     </div>
 </div>
 
+<div id="forever">
+    <div>
+        <div class="top-text">Happy Birthday Love 💕<br>Happy 24th Ayu</div>
+        <h1>Forever ♾️</h1>
+        <p>With you. Always.</p>
+    </div>
+</div>
+
 <script>
-/* Reveal on cake click */
+/* Reveal */
 const cake = document.getElementById("cake");
 const content = document.getElementById("content");
 
@@ -139,7 +184,7 @@ cake.addEventListener("click", () => {
     heartsInterval();
 });
 
-/* Typing effect */
+/* Typing (slow & calm) */
 const text = `First of all, Happy Happy Birthday dhuv.
 
 As I'm trying to write for you, i don't know what to write exactly there is a lot to say to you a lot of things I want to say but there are not much words in any language that can help me describe my feelings.
@@ -172,51 +217,35 @@ P.S (thank you mummy for creating this big ah child and i promise I'll take care
 
 I love you dhruv, these 3 words are all that raya can say at the end. I burn for you.`;
 
-let index = 0;
+let i = 0;
 function typeText() {
-    if (index < text.length) {
-        document.getElementById("typedText").innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeText, 25);
-    } else {
-        showForever();
+    if (i < text.length) {
+        document.getElementById("typedText").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeText, 45);
     }
 }
 
-/* Floating hearts */
+/* Hearts (red, white, pink) */
 function heartsInterval() {
+    const hearts = ["🤍","❤️","💗"];
     setInterval(() => {
         const heart = document.createElement("div");
         heart.className = "heart";
-        heart.innerHTML = "🤍";
+        heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
         heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 20 + 10 + "px";
+        heart.style.fontSize = Math.random() * 20 + 14 + "px";
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 6000);
-    }, 500);
+    }, 400);
 }
 
-/* Forever screen */
-function showForever() {
-    setTimeout(() => {
-        document.body.innerHTML = `
-            <div style="
-                height:100vh;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                background:linear-gradient(135deg,#fff1f5,#fef6e4);
-                font-family:Poppins,sans-serif;
-                text-align:center;
-            ">
-                <div>
-                    <h1 style="font-size:52px;color:#e26d5c;">Forever ♾️</h1>
-                    <p style="font-size:20px;color:#555;">With you. Always.</p>
-                </div>
-            </div>
-        `;
-    }, 3000);
-}
+/* Forever only after scrolling to bottom */
+window.addEventListener("scroll", () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
+        document.getElementById("forever").style.display = "flex";
+    }
+});
 </script>
 
 </body>
